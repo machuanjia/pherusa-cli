@@ -1,0 +1,25 @@
+{
+  "name": "pherusa-cli",
+  "version": "1.0.3",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "pherusa-cli": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "npm publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "download-git-repo": "^3.0.2",
+    "fs-extra": "^9.1.0",
+    "inquirer": "^8.0.0",
+    "ora": "^5.4.0",
+    "os": "^0.1.1",
+    "path": "^0.12.7"
+  }
+}
