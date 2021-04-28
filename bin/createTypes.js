@@ -1,12 +1,12 @@
 /*
  * @Author: D.Y
  * @Date: 2021-04-27 11:22:31
- * @LastEditTime: 2021-04-27 15:03:17
+ * @LastEditTime: 2021-04-28 14:43:49
  * @LastEditors: D.Y
- * @FilePath: /cli/pherusa-cli/bin/createTypes.js
+ * @FilePath: /pherusa-cli/bin/createTypes.js
  * @Description: 
  */
-
+const appTypes = ['si','mi']
 const types = ['co','vi','ta']
 const typesMap = {
     co:{
@@ -25,5 +25,6 @@ const typesMap = {
 
 module.exports = {
     types,
-    maps:typesMap
+    maps:typesMap,
+    appTypes
 }

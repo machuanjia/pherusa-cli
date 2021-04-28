@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const program = require('commander');
 const init = require('./init');
-const { types,maps } = require('./createTypes')
+const { appTypes,types,maps } = require('./createTypes')
 const generate = require('./generate');
 const common = require('./common');
 const { message } = common
@@ -25,7 +25,8 @@ if (process.argv.slice(2).join('') === '-v') {
 
 if (process.argv.slice(2).join('') === '-h') {
   var languages = [
-    { command: "n", params: "name", description:"create a new app", demo:"pherusa-cli n my-app"},
+    { command: "n", params: "si", description:"create a new single app", demo:"pherusa-cli n si my-app"},
+    { command: "n", params: "mi", description:"create a new micro main app", demo:"pherusa-cli n mi my-micro-app"},
     { command: "g", params: "co",description:"create a component", demo:"pherusa-cli g co my-component" },
     { command: "g", params: "vi",description:"create a view", demo:"pherusa-cli g vi my-view" },
     { command: "g", params: "ta",description:"create a table", demo:"pherusa-cli g ta my-table-view" }
@@ -36,12 +37,17 @@ if (process.argv.slice(2).join('') === '-h') {
 }
 
 program
-  .command('new [name]')
+  .command('new <type> [name]')
   .alias('n')
   .description('Creates a new project')
-  .action(function (name) {
-    const appName = name || 'phersua-app';
-    init({ app: appName })
+  .action(function (type,name) {
+    const acceptList = appTypes
+    if (!acceptList.find(item => item === type)) {
+      console.log(`create type must one of [${types.join()}]`)
+      process.exit()
+    }
+    const appName = name || 'phersua-micro';
+    init({ type,app: appName })
   });
 
 
