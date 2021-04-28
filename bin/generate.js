@@ -7,6 +7,7 @@ const componentTpl = 'Component.st';
 const tableTpl = 'Table.st';
 const tableCollectionTpl = 'TableCollection.st';
 const viewTpl = 'View.st';
+const apiTpl = 'Api.st';
 
 const {copyTemplate, write, mkdir, message, sep, exportCodeGenerator } = common;
 
@@ -87,7 +88,8 @@ function createTable(dir, params) {
       });
       copyTemplate(`${templatePath}${tableTpl}`, `${cmPath}/${fileName}`, {
         name: cmNameUppercase,
-        collection:cmNameUppercaseCollection
+        collection:cmNameUppercaseCollection,
+        collectionPath:'./'
       });
       message.success('Create view table success!');
     })
@@ -97,6 +99,33 @@ function createTable(dir, params) {
     });
   }
 }
+
+function createApi(dir, params){
+  const cmName = params.name;
+  const cmNameUppercase = camelCaseFn(cmName);
+  const cmPath = `${dir}`;
+  const fileName = getFileName({ name: cmNameUppercase, suffix: 'ts' });
+  fs
+    .ensureDir(cmPath)
+    .then(() => {
+      copyTemplate(`${templatePath}${apiTpl}`, `${cmPath}/${fileName}`, {
+        name: cmNameUppercase
+      });
+      message.success('Create api success!');
+      try {
+        fs.appendFileSync(`${dir}${sep}/index.ts`, exportCodeGenerator('component', {  name: cmName, uppercaseName: cmNameUppercase }));
+      } catch (error) {
+        message.error('Can\'t append to index.ts file, maybe this file non-existent!')
+      } finally {
+        process.exit(0)
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      process.exit(1);
+    });
+}
+
 function createView(dir, params){
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
@@ -139,7 +168,10 @@ function generate({type, params}) {
           break;
         case 'ta':
           createTable(dist,params);
-          break;  
+          break; 
+        case 'api':
+          createApi(dist,params);
+          break;    
         case 'vi':
           createView(dist,params);
           break;    

@@ -3,7 +3,7 @@ import { Table, Input, Button, Tooltip, Modal } from 'laiye-antd';
 
 import { ContentLayoutComponent } from 'laiye-pro';
 import { MODAL_SIZE } from 'laiye-pro';
-// import <% collection %> from './<% collection %>';
+import <% collection %> from '<% collectionPath %><% collection %>';
 import { listMixin } from 'laiye-pro';
 import { getUsers, getUserDetail, updateUser, deleteUser } from '@apis/index';
 import type { IListMixin } from '@interfaces/mixin';

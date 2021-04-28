@@ -1,13 +1,13 @@
 /*
  * @Author: D.Y
- * @Date: 2021-04-27 11:22:31
- * @LastEditTime: 2021-04-28 14:43:49
+ * @Date: 2021-04-28 14:42:21
+ * @LastEditTime: 2021-04-28 15:00:32
  * @LastEditors: D.Y
  * @FilePath: /pherusa-cli/bin/createTypes.js
  * @Description: 
  */
 const appTypes = ['si','mi']
-const types = ['co','vi','ta']
+const types = ['co','vi','ta','api']
 const typesMap = {
     co:{
         path:'components',
@@ -20,6 +20,10 @@ const typesMap = {
     ta:{
         path:'views',
         defaultName:'example-table'
+    },
+    api:{
+        path:'apis',
+        defaultName:'example-api'
     }
 }
 

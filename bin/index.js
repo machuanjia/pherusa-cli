@@ -29,7 +29,8 @@ if (process.argv.slice(2).join('') === '-h') {
     { command: "n", params: "mi", description:"create a new micro main app", demo:"pherusa-cli n mi my-micro-app"},
     { command: "g", params: "co",description:"create a component", demo:"pherusa-cli g co my-component" },
     { command: "g", params: "vi",description:"create a view", demo:"pherusa-cli g vi my-view" },
-    { command: "g", params: "ta",description:"create a table", demo:"pherusa-cli g ta my-table-view" }
+    { command: "g", params: "ta",description:"create a table", demo:"pherusa-cli g ta my-table-view" },
+    { command: "g", params: "api",description:"create a api", demo:"pherusa-cli g api myEntityName" }
   ];
   
   console.table(languages)
