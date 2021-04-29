@@ -193,9 +193,12 @@ const createModule = (type:string, params:any) => {
 
   const cmPath = `${dir}${sep}${cmName}`;
   const cmSchemaPath = `${dir}db${sep}schema`;
+  const cmDaoPath = `${dir}dao`;
 
   // @ts-ignore
   const fileSchemaName = getFileName({ name: `${cmName}.schema`, suffix: 'ts' });
+  // @ts-ignore
+  const fileDaoName = getFileName({ name: `${cmName}.entity`, suffix: 'ts' });
 
   // @ts-ignore
   const fileModuleName = getFileName({ name: `${cmName}.module`, suffix: 'ts' });
@@ -207,6 +210,14 @@ const createModule = (type:string, params:any) => {
     console.error(`the ${cmName} module exist!`)
     process.exit();
   } else {
+    fs
+    .ensureDir(cmDaoPath).then(()=>{
+      copyTemplate(`${templatePath}${daoTpl}`, `${cmDaoPath}/${fileDaoName}`, {
+        name: cmNameUppercase,
+        lname:cmName,
+        prefix:'/'
+      });
+    })
     fs
     .ensureDir(cmSchemaPath).then(()=>{
       copyTemplate(`${templatePath}${schemaTpl}`, `${cmSchemaPath}/${fileSchemaName}`, {

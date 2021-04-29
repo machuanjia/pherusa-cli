@@ -9,7 +9,9 @@ import { <% name %> } from '../dao<% prefix %><% lname %>.entity';
 export class <% name %>Service {
   constructor(
     @InjectModel(<% name %>Schema)
-    private readonly <% lname %>Model: ReturnModelType<typeof <% name %>Schema>,
+    private readonly <% lname %>Model: ReturnModelType<
+      typeof <% name %>Schema
+    >,
   ) {}
 
   async create<% name %>(dao: <% name %>): Promise<<% name %>> {
