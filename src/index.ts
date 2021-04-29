@@ -30,13 +30,16 @@ if (process.argv.slice(2).join('') === '-v') {
 
 if (process.argv.slice(2).join('') === '-h') {
   var languages = [
-    { command: "n", params: "si", description:"create a new single app", demo:"pherusa-cli n si my-app"},
-    { command: "n", params: "si-s", description:"create a new single server", demo:"pherusa-cli n si-s my-app-server"},
-    { command: "n", params: "mi", description:"create a new micro main app", demo:"pherusa-cli n mi my-micro-app"},
-    { command: "n", params: "mi-s", description:"create a new micro main server", demo:"pherusa-cli n mi my-micro-server"},
-    { command: "g", params: "co",description:"create a component", demo:"pherusa-cli g co my-component" },
-    { command: "g", params: "vi",description:"create a view", demo:"pherusa-cli g vi my-view" },
-    { command: "g", params: "ta",description:"create a table", demo:"pherusa-cli g ta my-table-view" },
+    { command: "server-nestjs:"},
+    { command: "n", params: "single-s", description:"create a new single server", demo:"pherusa-cli n single-s my-app-server"},
+    { command: "n", params: "micro-s", description:"create a new micro main server", demo:"pherusa-cli n micro my-micro-server"},
+    { command: "g", params: "module",description:"create nestjs module(schema,controller,service,module)", demo:"pherusa-cli g module myModuleName" },
+    { command: "client:"},
+    { command: "n", params: "single", description:"create a new single app", demo:"pherusa-cli n single my-app"},
+    { command: "n", params: "micro", description:"create a new micro main app", demo:"pherusa-cli n micro my-micro-app"},
+    { command: "g", params: "comp",description:"create a component", demo:"pherusa-cli g comp my-component" },
+    { command: "g", params: "view",description:"create a view", demo:"pherusa-cli g view my-view" },
+    { command: "g", params: "table",description:"create a table", demo:"pherusa-cli g table my-table-view" },
     { command: "g", params: "api",description:"create a api", demo:"pherusa-cli g api myEntityName" }
   ];
   console.table(languages)

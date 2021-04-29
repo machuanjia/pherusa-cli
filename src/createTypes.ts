@@ -1,23 +1,27 @@
 // @ts-ignore
-const appTypes = ['si','si-s','mi','mi-s']
+const appTypes = ['single','single-s','micro','micro-s']
 // @ts-ignore
-const types = ['co','vi','ta','api']
+const types = ['comp','view','table','api','module']
 const typesMap = {
-    co:{
+    comp:{
         path:'components',
         defaultName:'ExampleComponent'
     },
-    vi:{
+    view:{
         path:'views',
         defaultName:'example-view'
     },
-    ta:{
+    table:{
         path:'views',
         defaultName:'example-table'
     },
     api:{
         path:'apis',
         defaultName:'example-api'
+    },
+    module:{
+        path:'',
+        defaultName:'example-module'
     }
 }
 

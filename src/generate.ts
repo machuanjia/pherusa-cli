@@ -12,11 +12,29 @@ const tableTpl = 'react/Table.st';
 const tableCollectionTpl = 'react/TableCollection.st';
 const viewTpl = 'react/View.st';
 const apiTpl = 'react/Api.st';
+
+const schemaTpl = 'nestjs/Schema.st';
+const daoTpl = 'nestjs/Dao.st';
+const controllerTpl = 'nestjs/Controller.st';
+const ServiceTpl = 'nestjs/Service.st';
+const moduleTpl = 'nestjs/Module.st';
+
 // @ts-ignore
 const {copyTemplate, write, mkdir, message, sep, exportCodeGenerator } = common;
 
 const camelCaseFn = (str:string) => {
   return `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`;
+}
+
+const getDir = (type:any,params:any) => {
+  const pkgPath = findPkgPath(process.cwd())
+  if (!pkgPath) {
+    message.error('No \'package.json\' file was found for the project.')
+    process.exit()
+  }
+  const pathDir = params.path
+  const dist = path.join(pkgPath, `./src/${pathDir || maps[type].path}`);
+  return dist
 }
 
 // @ts-ignore
@@ -41,7 +59,8 @@ const findPkgPath = (dir:string) => {
   return pkgPath
 }
 
-const createComponent = (dir:string, params:any) => {
+const createComponent = (type:string, params:any) => {
+  const dir = getDir(type,params)
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmPath = `${dir}${sep}${cmNameUppercase}`;
@@ -75,7 +94,8 @@ const createComponent = (dir:string, params:any) => {
 }
 
 // @ts-ignore
-const createTable = (dir, params) => {
+const createTable = (type:string, params:any) => {
+  const dir = getDir(type,params)
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmNameUppercaseCollection = camelCaseFn(cmName)+'Collection';
@@ -109,7 +129,8 @@ const createTable = (dir, params) => {
 }
 
 // @ts-ignore
-const createApi = (dir, params) => {
+const createApi = (type:string, params:any) => {
+  const dir = getDir(type,params)
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmPath = `${dir}`;
@@ -137,7 +158,8 @@ const createApi = (dir, params) => {
 }
 
 // @ts-ignore
-const createView = (dir, params) => {
+const createView = (type:string, params:any) => {
+  const dir = getDir(type,params)
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmPath = `${dir}${sep}${cmNameUppercase}`;
@@ -162,39 +184,93 @@ const createView = (dir, params) => {
     });
   }
 }
+
 // @ts-ignore
-const generate = ({type, params}) => {
-  const pkgPath = findPkgPath(process.cwd())
-  if (!pkgPath) {
-    message.error('No \'package.json\' file was found for the project.')
-    process.exit()
-  }
-  const pathDir = params.path
-  const dist = path.join(pkgPath, `./src/${pathDir || maps[type].path}`);
-  fs
-    .ensureDir(dist)
+const createModule = (type:string, params:any) => {
+  const dir = getDir(type,params)
+  const cmName = params.name;
+  const cmNameUppercase = camelCaseFn(cmName);
+
+  const cmPath = `${dir}${sep}${cmName}`;
+  const cmSchemaPath = `${dir}db${sep}schema`;
+
+  // @ts-ignore
+  const fileSchemaName = getFileName({ name: `${cmName}.schema`, suffix: 'ts' });
+
+  // @ts-ignore
+  const fileModuleName = getFileName({ name: `${cmName}.module`, suffix: 'ts' });
+  // @ts-ignore
+  const fileControllerName = getFileName({ name: `${cmName}.controller`, suffix: 'ts' });
+  // @ts-ignore
+  const fileServiceName = getFileName({ name: `${cmName}.service`, suffix: 'ts' });
+  if(fs.existsSync(cmPath)) {
+    console.error(`the ${cmName} module exist!`)
+    process.exit();
+  } else {
+    fs
+    .ensureDir(cmSchemaPath).then(()=>{
+      copyTemplate(`${templatePath}${schemaTpl}`, `${cmSchemaPath}/${fileSchemaName}`, {
+        name: cmNameUppercase,
+        lname:cmName,
+        prefix:'/'
+      });
+    })
+    fs
+    .ensureDir(cmPath)
     .then(() => {
-      switch (type) {
-        case 'co':
-          createComponent(dist, params);
-          break;
-        case 'ta':
-          createTable(dist,params);
-          break; 
-        case 'api':
-          createApi(dist,params);
-          break;    
-        case 'vi':
-          createView(dist,params);
-          break;    
-        default:
-          break;
-      }
+      copyTemplate(`${templatePath}${moduleTpl}`, `${cmPath}/${fileModuleName}`, {
+        name: cmNameUppercase,
+        lname:cmName,
+        prefix:'/'
+      });
+      copyTemplate(`${templatePath}${controllerTpl}`, `${cmPath}/${fileControllerName}`, {
+        name: cmNameUppercase,
+        lname:cmName,
+        prefix:'/'
+      });
+      copyTemplate(`${templatePath}${ServiceTpl}`, `${cmPath}/${fileServiceName}`, {
+        name: cmNameUppercase,
+        lname:cmName,
+        prefix:'/'
+      });
+      message.success('Create module success!');
     })
     .catch((err:any) => {
       console.log(err);
       process.exit(1);
     });
+  }
+}
+
+
+// @ts-ignore
+const generate = ({type, params}) => {
+  // fs
+  //   .ensureDir(dist)
+    // .then(() => {
+      switch (type) {
+        case 'comp':
+          createComponent(type, params);
+          break;
+        case 'table':
+          createTable(type,params);
+          break; 
+        case 'api':
+          createApi(type,params);
+          break;    
+        case 'view':
+          createView(type,params);
+          break;     
+        case 'module':
+          createModule(type,params)
+        default:
+          break;
+      }
+    // })
+    // .catch((err:any) => {
+    //   console.log(err);
+    //   process.exit(1);
+    // });
 }
 
 module.exports = generate;
