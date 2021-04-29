@@ -31,7 +31,9 @@ if (process.argv.slice(2).join('') === '-v') {
 if (process.argv.slice(2).join('') === '-h') {
   var languages = [
     { command: "n", params: "si", description:"create a new single app", demo:"pherusa-cli n si my-app"},
+    { command: "n", params: "si-s", description:"create a new single server", demo:"pherusa-cli n si-s my-app-server"},
     { command: "n", params: "mi", description:"create a new micro main app", demo:"pherusa-cli n mi my-micro-app"},
+    { command: "n", params: "mi-s", description:"create a new micro main server", demo:"pherusa-cli n mi my-micro-server"},
     { command: "g", params: "co",description:"create a component", demo:"pherusa-cli g co my-component" },
     { command: "g", params: "vi",description:"create a view", demo:"pherusa-cli g vi my-view" },
     { command: "g", params: "ta",description:"create a table", demo:"pherusa-cli g ta my-table-view" },

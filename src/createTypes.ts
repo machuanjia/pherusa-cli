@@ -1,5 +1,5 @@
 // @ts-ignore
-const appTypes = ['si','mi']
+const appTypes = ['si','si-s','mi','mi-s']
 // @ts-ignore
 const types = ['co','vi','ta','api']
 const typesMap = {

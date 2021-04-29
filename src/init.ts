@@ -7,7 +7,9 @@ const inquirer = require('inquirer');
 
 const tplMap = {
   'si':'https://git.laiye.com/laiye-frontend-repos/pherusa.git#v-1.2.0',
-  'mi':'https://git.laiye.com/laiye-frontend-repos/nereus.git#pherusa'
+  'si-s':'https://git.laiye.com/laiye-frontend-repos/pherusa-server.git',
+  'mi':'https://git.laiye.com/laiye-frontend-repos/nereus.git#pherusa',
+  'mi-s':'https://git.laiye.com/laiye-frontend-repos/pherusa-server.git#micro',
 }
 
 // @ts-ignore
