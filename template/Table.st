@@ -5,7 +5,7 @@ import { ContentLayoutComponent } from 'laiye-pro';
 import { MODAL_SIZE } from 'laiye-pro';
 import <% collection %> from '<% collectionPath %><% collection %>';
 import { listMixin } from 'laiye-pro';
-import { getUsers, getUserDetail, updateUser, deleteUser } from '@apis/index';
+import { get<% name %>s, get<% name %>Detail, update<% name %>, delete<% name %> } from '@apis/index';
 import type { IListMixin } from '@interfaces/mixin';
 import {
   SettingOutlined,
@@ -21,10 +21,10 @@ type State = unknown;
 class <% name %> extends Component<IListMixin, State> {
   init() {
     return {
-      fetchAction: getUsers,
-      getDetailAction: getUserDetail,
-      updateAction: updateUser,
-      deleteAction: deleteUser,
+      fetchAction: get<% name %>s,
+      getDetailAction: get<% name %>Detail,
+      updateAction: update<% name %>,
+      deleteAction: delete<% name %>,
     };
   }
 

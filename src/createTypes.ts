@@ -1,12 +1,6 @@
-/*
- * @Author: D.Y
- * @Date: 2021-04-28 14:42:21
- * @LastEditTime: 2021-04-28 15:00:32
- * @LastEditors: D.Y
- * @FilePath: /pherusa-cli/bin/createTypes.js
- * @Description: 
- */
+// @ts-ignore
 const appTypes = ['si','mi']
+// @ts-ignore
 const types = ['co','vi','ta','api']
 const typesMap = {
     co:{

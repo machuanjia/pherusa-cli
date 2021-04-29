@@ -1,13 +1,18 @@
 #!/usr/bin/env node
 const program = require('commander');
+// @ts-ignore
 const init = require('./init');
+// @ts-ignore
 const { appTypes,types,maps } = require('./createTypes')
+// @ts-ignore
 const generate = require('./generate');
+// @ts-ignore
 const common = require('./common');
+// @ts-ignore
 const { message } = common
 
-function paramsToObj (paramsArr) {
-  const params = {};
+const paramsToObj  = (paramsArr:any[]) => {
+  const params:any = {};
   paramsArr.forEach(item => {
       const kv = item.split('=')
       const key = kv[0]
@@ -32,7 +37,6 @@ if (process.argv.slice(2).join('') === '-h') {
     { command: "g", params: "ta",description:"create a table", demo:"pherusa-cli g ta my-table-view" },
     { command: "g", params: "api",description:"create a api", demo:"pherusa-cli g api myEntityName" }
   ];
-  
   console.table(languages)
   process.exit()
 }
@@ -41,9 +45,9 @@ program
   .command('new <type> [name]')
   .alias('n')
   .description('Creates a new project')
-  .action(function (type,name) {
+  .action(function (type:string,name:string) {
     const acceptList = appTypes
-    if (!acceptList.find(item => item === type)) {
+    if (!acceptList.find((item:string) => item === type)) {
       console.log(`create type must one of [${types.join()}]`)
       process.exit()
     }
@@ -56,13 +60,13 @@ program
   .command('generate <type> [name] [otherParams...]')
   .alias('g')
   .description('Generates something')
-  .action(function (type, name, otherParams) {
+  .action(function (type:string, name:string, otherParams:any) {
     const acceptList = types
-    if (!acceptList.find(item => item === type)) {
+    if (!acceptList.find((item:string) => item === type)) {
       console.log(`Generates type must one of [${types.join()}]`)
       process.exit()
     }
-    const params = paramsToObj(otherParams)
+    const params:any = paramsToObj(otherParams)
     params.name = name || (maps[name].defaultName)
     generate({
       type,

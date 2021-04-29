@@ -1,25 +1,30 @@
+// @ts-ignore
 const fs = require('fs-extra');
+// @ts-ignore
 const path = require('path');
+// @ts-ignore
 const common = require('./common');
 const templatePath = '../template/';
+// @ts-ignore
 const { types,maps } = require('./createTypes')
 const componentTpl = 'Component.st';
 const tableTpl = 'Table.st';
 const tableCollectionTpl = 'TableCollection.st';
 const viewTpl = 'View.st';
 const apiTpl = 'Api.st';
-
+// @ts-ignore
 const {copyTemplate, write, mkdir, message, sep, exportCodeGenerator } = common;
 
-function camelCaseFn(str) {
+const camelCaseFn = (str:string) => {
   return `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`;
 }
 
-function getFileName({name, camelCase, suffix = 'ts'}) {
+// @ts-ignore
+const getFileName = ({name, camelCase, suffix = 'ts'}) => {
   return camelCase ? `${camelCaseFn(name)}.${suffix}` : `${name}.${suffix}`;
 }
 
-function findPkgPath (dir) {
+const findPkgPath = (dir:string) => {
   if (dir.split(path.sep).length === 2) return ''
   const pkg = path.join(dir, './package.json')
   let pkgPath = ''
@@ -36,10 +41,11 @@ function findPkgPath (dir) {
   return pkgPath
 }
 
-function createComponent(dir, params) {
+const createComponent = (dir:string, params:any) => {
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmPath = `${dir}${sep}${cmNameUppercase}`;
+  // @ts-ignore
   const fileName = getFileName({ name: 'index', suffix: 'tsx' });
   if(fs.existsSync(cmPath)) {
     console.error(`the ${cmName} component exist!`)
@@ -61,20 +67,22 @@ function createComponent(dir, params) {
         process.exit(0)
       }
     })
-    .catch(err => {
+    .catch((err:any) => {
       console.log(err);
       process.exit(1);
     });
   }
 }
 
-
-function createTable(dir, params) {
+// @ts-ignore
+const createTable = (dir, params) => {
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmNameUppercaseCollection = camelCaseFn(cmName)+'Collection';
   const cmPath = `${dir}${sep}${cmNameUppercase}`;
+  // @ts-ignore
   const fileName = getFileName({ name: 'index', suffix: 'tsx' });
+  // @ts-ignore
   const fileCollectionName = getFileName({ name: `${cmNameUppercase}Collection`, suffix: 'tsx' });
   if(fs.existsSync(cmPath)) {
     console.error(`the ${cmName} view exist!`)
@@ -93,17 +101,19 @@ function createTable(dir, params) {
       });
       message.success('Create view table success!');
     })
-    .catch(err => {
+    .catch((err:any) => {
       console.log(err);
       process.exit(1);
     });
   }
 }
 
-function createApi(dir, params){
+// @ts-ignore
+const createApi = (dir, params) => {
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmPath = `${dir}`;
+  // @ts-ignore
   const fileName = getFileName({ name: cmNameUppercase, suffix: 'ts' });
   fs
     .ensureDir(cmPath)
@@ -120,16 +130,18 @@ function createApi(dir, params){
         process.exit(0)
       }
     })
-    .catch(err => {
+    .catch((err:any) => {
       console.log(err);
       process.exit(1);
     });
 }
 
-function createView(dir, params){
+// @ts-ignore
+const createView = (dir, params) => {
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmPath = `${dir}${sep}${cmNameUppercase}`;
+  // @ts-ignore
   const fileName = getFileName({ name: 'index', suffix: 'tsx' });
   if(fs.existsSync(cmPath)) {
     console.error(`the ${cmName} view exist!`)
@@ -144,14 +156,14 @@ function createView(dir, params){
       });
       message.success('Create view success!');
     })
-    .catch(err => {
+    .catch((err:any) => {
       console.log(err);
       process.exit(1);
     });
   }
 }
-
-function generate({type, params}) {
+// @ts-ignore
+const generate = ({type, params}) => {
   const pkgPath = findPkgPath(process.cwd())
   if (!pkgPath) {
     message.error('No \'package.json\' file was found for the project.')
@@ -179,7 +191,7 @@ function generate({type, params}) {
           break;
       }
     })
-    .catch(err => {
+    .catch((err:any) => {
       console.log(err);
       process.exit(1);
     });

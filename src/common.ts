@@ -1,31 +1,33 @@
+// @ts-ignore
 const fs = require('fs-extra');
 const os = require('os');
+// @ts-ignore
 const path = require('path');
 const chalk = require('chalk');
-
+// @ts-ignore
 const sep = os.platform() === 'win32' ? '\\' : '/';
-
+// @ts-ignore
 const message = {
-  success (text) {
+  success (text:string) {
     console.log(chalk.green.bold(text));
   },
-  error (text) {
+  error (text:string) {
     console.log(chalk.red.bold(text));
   },
-  info (text) {
+  info (text:string) {
     console.log(chalk.blue.bold(text));
   },
-  light (text) {
+  light (text:string) {
     console.log(chalk.yellow.bold(text));
   }
 };
-
-function copyTemplate(from, to, renderData) {
+//@ts-ignore
+const copyTemplate = (from, to, renderData) => {
   from = path.join(__dirname, from);
   if (renderData) {
     const originTemplate = fs.readFileSync(from, 'utf-8')
     const distFile = originTemplate.split(/[/s/S]*?\<\%\s*(\w+)\s*\%\>[/s/S]*?/im)
-                                   .map(key => {
+                                   .map((key:string) => {
                                     return renderData[key] || key
                                    })
                                    .join('')
@@ -34,16 +36,18 @@ function copyTemplate(from, to, renderData) {
     write(to, fs.readFileSync(from, 'utf-8'));
   }
 }
-function write(path, str) {
+// @ts-ignore
+const write = (path, str) => {
   fs.writeFileSync(path, str);
 }
-function mkdir(path, fn) {
-  fs.mkdir(path, function(err) {
+// @ts-ignore
+const mkdir = (path, fn) => {
+  fs.mkdir(path, function(err:any) {
     fn && fn();
   });
 }
-
-function exportCodeGenerator(type, options) {
+// @ts-ignore
+const exportCodeGenerator = (type, options) => {
   let code = '';
   if (type === 'component') {
     code = `export { default as ${options.uppercaseName} } from './${options.uppercaseName}';\r\n`;

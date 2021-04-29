@@ -1,12 +1,5 @@
-/*
- * @Author: D.Y
- * @Date: 2021-04-28 14:42:21
- * @LastEditTime: 2021-04-28 14:46:11
- * @LastEditors: D.Y
- * @FilePath: /pherusa-cli/bin/init.js
- * @Description: 
- */
 const ora = require('ora');
+// @ts-ignore
 const fs = require('fs-extra');
 const download = require('download-git-repo');
 const {basename, join} = require('path');
@@ -17,10 +10,11 @@ const tplMap = {
   'mi':'https://git.laiye.com/laiye-frontend-repos/nereus.git#pherusa'
 }
 
-function createProject(dest,type) {
+// @ts-ignore
+const createProject = (dest,type) => {
     const spinner = ora('downloading template')
     spinner.start()
-    
+    // @ts-ignore
     download(`direct:${tplMap[type]}`, dest, {clone:true},function (err) {
       spinner.stop()
       if (err) {
@@ -31,8 +25,8 @@ function createProject(dest,type) {
   })
 }
 
-  
-function init({type,app}) {
+// @ts-ignore
+const init = ({type,app}) => {
     const dest = process.cwd();
     const appDir = join(dest, `./${app}`);
     if (fs.existsSync(appDir)) {
@@ -44,7 +38,7 @@ function init({type,app}) {
          {name: 'Y',value: true},
          {name: 'N',value: false}
         ]
-      },]).then(res => {
+      },]).then((res:any) => {
           if (res.action) {
             console.log('clear and create'); 
             const spinner = ora(`remove ${app} dir`).start();
@@ -54,7 +48,7 @@ function init({type,app}) {
                 spinner.stop();
                 createProject(appDir,type);
               })
-              .catch(err => {
+              .catch((err:any) => {
                 console.error(err);
               });
           } else {
