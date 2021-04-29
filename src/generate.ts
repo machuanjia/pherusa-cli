@@ -7,11 +7,11 @@ const common = require('./common');
 const templatePath = '../template/';
 // @ts-ignore
 const { types,maps } = require('./createTypes')
-const componentTpl = 'Component.st';
-const tableTpl = 'Table.st';
-const tableCollectionTpl = 'TableCollection.st';
-const viewTpl = 'View.st';
-const apiTpl = 'Api.st';
+const componentTpl = 'react/Component.st';
+const tableTpl = 'react/Table.st';
+const tableCollectionTpl = 'react/TableCollection.st';
+const viewTpl = 'react/View.st';
+const apiTpl = 'react/Api.st';
 // @ts-ignore
 const {copyTemplate, write, mkdir, message, sep, exportCodeGenerator } = common;
 
