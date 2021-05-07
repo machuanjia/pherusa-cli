@@ -1,3 +1,11 @@
+/*
+ * @Author: D.Y
+ * @Date: 2021-04-27 15:15:32
+ * @LastEditTime: 2021-05-07 16:38:07
+ * @LastEditors: D.Y
+ * @FilePath: /pherusa-cli/src/common.ts
+ * @Description: 
+ */
 // @ts-ignore
 const fs = require('fs-extra');
 const os = require('os');
@@ -51,6 +59,8 @@ const exportCodeGenerator = (type, options) => {
   let code = '';
   if (type === 'component') {
     code = `export { default as ${options.uppercaseName} } from './${options.uppercaseName}';\r\n`;
+  } else if(type === 'api' || type === 'interface'){
+    code = `export * from './${options.name}';\r\n`;
   } else {
     code = `export { default as ${options.name} } from './routes/${options.uppercaseName}/model';\r\n`;
   }

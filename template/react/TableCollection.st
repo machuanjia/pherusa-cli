@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { Form, Input, Button } from 'laiye-antd';
 import i18n from 'i18next';
+import { I<% cmNameUppercase %> } from '@interfaces/index';
 
 type Props = {
   callback: ({ isVisible, isRefresh }) => unknown;
-  form: any;
-  entity: unknown;
+  entity: I<% cmNameUppercase %>;
 };
 type State = {
   loading: boolean;
 };
+
+const { TextArea } = Input
 
 export default class <% name %> extends Component<
   Props,
@@ -31,26 +33,38 @@ export default class <% name %> extends Component<
       isRefresh: false,
     });
   }
-  handleSubmit() {
+  handleSubmit(values) {
     this.props.callback({
       isVisible: false,
       isRefresh: true,
-    });
+      values
+    } as any);
   }
  
   render() {
+    const { entity } = this.props
     return (
-      <Form
+       <Form
         labelCol={{ span: 24 }}
         wrapperCol={{ span: 24 }}
         onFinish={this.handleSubmit.bind(this)}
+        initialValues={{
+          name: entity ? entity.name : '',
+          description: entity ? entity.description : '',
+        }}
       >
         <Form.Item
-          label="名称"
+          label={i18n.t('list.name')}
           name="name"
-          rules={[{ required: true, message: '请输入名称' }]}
+          rules={[{ required: true }]}
         >
-          <Input placeholder="请输入名称" />
+          <Input placeholder={i18n.t('list.namePlaceholder')} />
+        </Form.Item>
+        <Form.Item
+          label={i18n.t('list.description')}
+          name="description"
+        >
+          <TextArea rows={4} placeholder={i18n.t('list.descriptionPlaceholder')} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" className="m-r-12">

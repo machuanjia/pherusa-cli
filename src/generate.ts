@@ -12,6 +12,7 @@ const tableTpl = 'react/Table.st';
 const tableCollectionTpl = 'react/TableCollection.st';
 const viewTpl = 'react/View.st';
 const apiTpl = 'react/Api.st';
+const interfaceTpl = 'react/Interface.st';
 
 const schemaTpl = 'nestjs/Schema.st';
 const daoTpl = 'nestjs/Dao.st';
@@ -99,7 +100,7 @@ const createTable = (type:string, params:any) => {
   const cmName = params.name;
   const cmNameUppercase = camelCaseFn(cmName);
   const cmNameUppercaseCollection = camelCaseFn(cmName)+'Collection';
-  const cmPath = `${dir}${sep}${cmNameUppercase}`;
+  const cmPath = `${dir}${sep}${cmName}`;
   // @ts-ignore
   const fileName = getFileName({ name: 'index', suffix: 'tsx' });
   // @ts-ignore
@@ -113,6 +114,7 @@ const createTable = (type:string, params:any) => {
     .then(() => {
       copyTemplate(`${templatePath}${tableCollectionTpl}`, `${cmPath}/${fileCollectionName}`, {
         name: cmNameUppercaseCollection,
+        cmNameUppercase:cmNameUppercase
       });
       copyTemplate(`${templatePath}${tableTpl}`, `${cmPath}/${fileName}`, {
         name: cmNameUppercase,
@@ -120,6 +122,50 @@ const createTable = (type:string, params:any) => {
         collectionPath:'./'
       });
       message.success('Create view table success!');
+      // 创建entity
+      createInterface(type,params)
+    })
+    .catch((err:any) => {
+      console.log(err);
+      process.exit(1);
+    });
+  }
+}
+
+const createInterface = (type:string, params:any) => {
+  const dir = getDir(type,{
+    path:'interfaces'
+  })
+  const cmName = params.name;
+  const cmNameUppercase = camelCaseFn(cmName);
+  const cmPath = `${dir}`;
+  // @ts-ignore
+  const fileName = getFileName({ name: cmName, suffix: 'ts' });
+  if(fs.existsSync(cmPath)) {
+    copyTemplate(`${templatePath}${interfaceTpl}`, `${cmPath}/${fileName}`, {
+      name: cmNameUppercase,
+    });
+    message.success('Create interface  success!');
+    try {
+      fs.appendFileSync(`${dir}${sep}/index.ts`, exportCodeGenerator('interface', {  name: cmName, uppercaseName: cmNameUppercase }));
+    } catch (error) {
+    } finally {
+      process.exit(0)
+    }
+  } else {
+    fs
+    .ensureDir(cmPath)
+    .then(() => {
+      copyTemplate(`${templatePath}${interfaceTpl}`, `${cmPath}/${fileName}`, {
+        name: cmNameUppercase,
+      });
+      message.success('Create interface  success!');
+      try {
+        fs.appendFileSync(`${dir}${sep}/index.ts`, exportCodeGenerator('interface', {  name: cmName, uppercaseName: cmNameUppercase }));
+      } catch (error) {
+      } finally {
+        process.exit(0)
+      }
     })
     .catch((err:any) => {
       console.log(err);
@@ -135,16 +181,17 @@ const createApi = (type:string, params:any) => {
   const cmNameUppercase = camelCaseFn(cmName);
   const cmPath = `${dir}`;
   // @ts-ignore
-  const fileName = getFileName({ name: cmNameUppercase, suffix: 'ts' });
+  const fileName = getFileName({ name: cmName, suffix: 'ts' });
   fs
     .ensureDir(cmPath)
     .then(() => {
       copyTemplate(`${templatePath}${apiTpl}`, `${cmPath}/${fileName}`, {
-        name: cmNameUppercase
+        name: cmNameUppercase,
+        lname:cmName
       });
       message.success('Create api success!');
       try {
-        fs.appendFileSync(`${dir}${sep}/index.ts`, exportCodeGenerator('component', {  name: cmName, uppercaseName: cmNameUppercase }));
+        fs.appendFileSync(`${dir}${sep}/index.ts`, exportCodeGenerator('api', {  name: cmName, uppercaseName: cmNameUppercase }));
       } catch (error) {
         message.error('Can\'t append to index.ts file, maybe this file non-existent!')
       } finally {

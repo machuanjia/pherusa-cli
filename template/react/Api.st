@@ -2,7 +2,7 @@ import request from '@utils/request'
 
 export const get<% name %>s = (params = {}) => {
   return request({
-    url: '/<% name %>s',
+    url: '/<% lname %>s',
     method: 'get',
     params,
   })
@@ -10,7 +10,7 @@ export const get<% name %>s = (params = {}) => {
 
 export const create<% name %> = (data) => {
   return request({
-    url: '/<% name %>s',
+    url: '/<% lname %>s',
     method: 'post',
     data,
   })
@@ -18,7 +18,7 @@ export const create<% name %> = (data) => {
 
 export const get<% name %>Detail = (id: string, params = {}) => {
   return request({
-    url: `/<% name %>/${id}`,
+    url: `/<% lname %>s/${id}`,
     method: 'get',
     params,
   })
@@ -26,7 +26,7 @@ export const get<% name %>Detail = (id: string, params = {}) => {
 
 export const update<% name %> = (id: string, data) => {
   return request({
-    url: `/<% name %>/${id}`,
+    url: `/<% lname %>s/${id}`,
     method: 'put',
     data,
   })
@@ -34,7 +34,7 @@ export const update<% name %> = (id: string, data) => {
 
 export const delete<% name %> = (id: string) => {
   return request({
-    url: `/<% name %>/${id}`,
+    url: `/<% lname %>s/${id}`,
     method: 'delete',
   })
 }

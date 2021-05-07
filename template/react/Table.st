@@ -5,7 +5,7 @@ import { ContentLayoutComponent } from 'laiye-pro';
 import { MODAL_SIZE } from 'laiye-pro';
 import <% collection %> from '<% collectionPath %><% collection %>';
 import { listMixin } from 'laiye-pro';
-import { get<% name %>s, get<% name %>Detail, update<% name %>, delete<% name %> } from '@apis/index';
+import { get<% name %>s, create<% name %>, get<% name %>Detail, update<% name %>, delete<% name %> } from '@apis/index';
 import type { IListMixin } from '@interfaces/mixin';
 import {
   SettingOutlined,
@@ -22,6 +22,7 @@ class <% name %> extends Component<IListMixin, State> {
   init() {
     return {
       fetchAction: get<% name %>s,
+      createAction: create<% name %>,
       getDetailAction: get<% name %>Detail,
       updateAction: update<% name %>,
       deleteAction: delete<% name %>,
@@ -33,7 +34,13 @@ class <% name %> extends Component<IListMixin, State> {
   }
 
   deleteAction(record) {
-    this.props.deleteEntity(record._id);
+    Modal.confirm({
+      title: '删除',
+      content: '确定要删除该记录吗?',
+      onOk:()=>{this.props.deleteEntity(record._id);},
+      okText: '确认',
+      cancelText: '取消',
+    });
   }
 
   getTable() {
@@ -41,9 +48,13 @@ class <% name %> extends Component<IListMixin, State> {
     const columns = [
       {
         title: i18n.t('list.name'),
-        dataIndex: 'username',
-        key: 'username',
-        render: (text) => text,
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: i18n.t('list.description'),
+        dataIndex: 'description',
+        key: 'description',
       },
       {
         title: i18n.t('list.operation'),
