@@ -1,7 +1,7 @@
 /*
  * @Author: D.Y
  * @Date: 2021-04-28 14:42:21
- * @LastEditTime: 2021-05-07 14:38:00
+ * @LastEditTime: 2021-06-16 10:57:31
  * @LastEditors: D.Y
  * @FilePath: /pherusa-cli/src/init.ts
  * @Description: 
@@ -14,10 +14,10 @@ const {basename, join} = require('path');
 const inquirer = require('inquirer');
 
 const tplMap = {
-  'single':'https://git.laiye.com/laiye-frontend-repos/pherusa.git#v-1.2.0',
-  'single-s':'https://git.laiye.com/laiye-frontend-repos/pherusa-server.git',
-  'micro':'https://git.laiye.com/laiye-frontend-repos/nereus.git#pherusa',
-  'micro-s':'https://git.laiye.com/laiye-frontend-repos/pherusa-server.git#micro',
+  'single':'https://github.com/machuanjia/pherusa.git#v-1.2.0',
+  'single-s':'https://github.com/machuanjia/pherusa-nestjs.git',
+  'micro':'https://github.com/machuanjia/pherusa-micro.git#pherusa',
+  'micro-s':'https://github.com/machuanjia/pherusa-nestjs#micro',
 }
 
 // @ts-ignore
